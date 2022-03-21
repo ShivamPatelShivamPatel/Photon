@@ -1,2 +1,2 @@
 # Photon
-Attempt to implement a distributed In-Switch Photon movement simulator in P4
+Attempt to implement a distributed simulator for In-Switch Photon motion in P4
