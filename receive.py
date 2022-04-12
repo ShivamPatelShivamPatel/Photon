@@ -32,7 +32,7 @@ def construct(result, B, dim):
     randsign = signed(getattr(result, dim + "_randsign"))
     exp = getattr(result, dim + "_exp")
     
-    coord = ((getattr(result, dim + "_coord") * sign) + (B * randsign * 10000)) * (10 ** -exp)
+    coord = ((getattr(result, dim + "_coord") * sign) + (B * randsign / 100)) * (10 ** -exp)
     return coord
 
 def handle_pkt(pkt, contents):
@@ -48,6 +48,7 @@ def handle_pkt(pkt, contents):
         print(result_string)
 
         contents.append(result_string)
+        print("more photons is %d" % (more_photons))
         if(not more_photons):
             with open("result_coordinates.csv", "w") as f:
                 f.writelines(contents)

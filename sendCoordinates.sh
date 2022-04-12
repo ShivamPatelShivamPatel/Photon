@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+echo mirroring_add 1 1 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0
+echo mirroring_add 2 2 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0
+echo mirroring_add 3 3 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0
+echo mirroring_add 4 4 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0
 echo table_add photon_coordinates coordinates_select 0 =\> 14027247718074 1 13 5411200103916656 0 15 8640006549776776 0 15 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0
 echo table_add photon_coordinates coordinates_select 1 =\> 2105229822659928 0 16 16247805930442188 0 17 4043286052332891 0 15 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0
 echo table_add photon_coordinates coordinates_select 2 =\> 17721796186376404 0 17 674190366526529 0 15 39583036876612192 0 16 | python3 ~/Hangar/BMv2/send_bmv2_commands.py ~/Hangar/networks/Photon/Photon.yml p0e0

@@ -35,7 +35,7 @@ class Photon(Packet):
                     IntField("z_exp",0),
                     IntField("z_randsign",0),
                     IntField("rand_index",0),
-                    LongField("B",0)
+                    BitField("B",0,128),
             ]
 
 bind_layers(UDP, Photon)#, dport = DPORT)
