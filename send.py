@@ -31,7 +31,7 @@ def main():
     parser.add_argument('--dst_id', type=int, default=None, help='The myTunnel dst_id to use, if unspecified then myTunnel header will not be included in packet')
     parser.add_argument('--host_iface', type=str, default="eth1", help='The host interface use')
     parser.add_argument('--count', type=int, default=1, help="Number of photons to transmit to destination host")
-    parser.add_argument('--version', type=int, default=1, help="1 if want to individually send #count packets, 2 if want to use recirculate")
+    parser.add_argument('--version', type=int, default=None, help="1 if want to individually send #count packets, 2 if want to use recirculate, 3 for fancy version")
 
     args = parser.parse_args()
 
@@ -56,7 +56,7 @@ def main():
             pkt.show2()
             sendp(pkt, iface=iface, verbose=True)
     
-    elif(version == 2):
+    elif(version == 2 or version == 3):
         print(("sending on interface {} to IP addr {}".format(iface, str(addr))))
         pkt =  Ether(src=get_if_hwaddr(iface), dst='ff:ff:ff:ff:ff:ff')
         sport=random.randint(49152,65535)            

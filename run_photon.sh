@@ -13,7 +13,7 @@ fi
 
 if [ -z "${TOPOLOGY}" ]
 then
-  TOPOLOGY=${HANGARGAMES}/networks/Photon/Photon.yml
+  TOPOLOGY=${HANGARGAMES}/networks/PhotonV3/Photon.yml
 fi
 echo "Using TOPOLOGY=${TOPOLOGY}"
 

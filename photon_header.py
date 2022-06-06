@@ -2,14 +2,17 @@ from scapy.all import *
 import sys, os
 
 #header photon_h {
-#    bit<1>              phase;
-#    bit<32>             count;
-#    int<64>             x_coord;
-#    int<32>             x_exp;
-#    int<64>             y_coord;
-#    int<32>             y_exp;
-#    int<64>             z_coord;
-#    int<32>             z_exp;
+#bit<32>             more_photon;
+#bit<32>             count;
+#int<64>             weight;
+
+#int<64>             d;
+#int<64>             phi;
+#int<64>             theta;
+
+#int<64>             x;
+#int<64>             y;
+#int<64>             z;
 #}
 
 
@@ -22,20 +25,13 @@ class Photon(Packet):
     name = "Photon"
     fields_desc = [ IntField("more_photons",1),
                     IntField("count",0),
-                    LongField("x_coord",0),
-                    IntField("x_signed",0),
-                    IntField("x_exp",0),
-                    IntField("x_randsign",0),
-                    LongField("y_coord",0),
-                    IntField("y_signed",0),
-                    IntField("y_exp",0),
-                    IntField("y_randsign",0),
-                    LongField("z_coord",0),
-                    IntField("z_signed",0),
-                    IntField("z_exp",0),
-                    IntField("z_randsign",0),
-                    IntField("rand_index",0),
-                    BitField("B",0,128),
+                    SignedLongField("weight",1<<56),
+                    SignedLongField("d",0),
+                    SignedLongField("phi",0),
+                    SignedLongField("theta",0),
+                    SignedLongField("x",0),
+                    SignedLongField("y",0),
+                    SignedLongField("z",0),
             ]
 
 bind_layers(UDP, Photon)#, dport = DPORT)

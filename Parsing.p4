@@ -80,27 +80,19 @@ header udp_h {
     bit<16>             chksum;
 }
 
-header photon_h { 
+
+header photon_h {
     bit<32>		more_photon;
     bit<32>		count;
+    int<64>		weight;
+    
+    int<64>		d;
+    int<64>		phi;
+    int<64>		theta;
 
-    bit<64>		x_coord;
-    bit<32>		x_sign;
-    bit<32>		x_exp;
-    bit<32>		x_randsign;
-
-    bit<64>		y_coord;
-    bit<32>		y_sign;
-    bit<32>		y_exp;
-    bit<32>		y_randsign;
-
-    bit<64>		z_coord;
-    bit<32>		z_sign;
-    bit<32>		z_exp;
-    bit<32>		z_randsign;
-
-    bit<32>		rand_index;
-    bit<128>		B;
+    int<64>		x;
+    int<64>		y;
+    int<64>		z;
 }
 
 header fec_h{

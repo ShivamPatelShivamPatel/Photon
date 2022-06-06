@@ -6,7 +6,7 @@ import os
 
 from scapy.all import sniff, sendp, hexdump, get_if_list, get_if_hwaddr
 from scapy.all import Packet, IPOption
-from scapy.all import ShortField, IntField, LongField, BitField, FieldListField, FieldLenField
+from scapy.all import ShortField, IntField, LongField, BitField, FieldListField, FieldLenField, SignedLongField
 from scapy.all import IP, TCP, UDP, Raw
 from scapy.layers.inet import _IPOption_HDR
 from photon_header import Photon
@@ -23,36 +23,27 @@ def get_if(host_iface):
         exit(1)
     return iface
 
-def signed(x):
-    assert(x == 0 or x == 1)
-    return -1 if x == 1 else 1
 
-def construct(result, B, dim):
-    sign = signed(getattr(result, dim + "_signed"))
-    randsign = signed(getattr(result, dim + "_randsign"))
-    exp = getattr(result, dim + "_exp")
-    
-    coord = ((getattr(result, dim + "_coord") * sign) + (B * randsign / 100)) * (10 ** -exp)
-    return coord
+def construct(result, attr):
+    return getattr(result,attr) / (1 << 56)
 
 def handle_pkt(pkt, contents):
     if Photon in pkt:
         result = pkt.getlayer(Photon)
         more_photons = getattr(result, "more_photons")
         count = getattr(result, "count")
-        rand_index = getattr(result, "rand_index")
-        B = getattr(result, "B")
 
-        x, y, z = (construct(result, B, "x"), construct(result, B, "y"), construct(result, B, "z"))
-        result_string = str(x) + "," + str(y) + "," + str(z) + "," + str(rand_index) + "\n"
-        print(result_string)
+        x, y, z, phi, theta, d = (construct(result, "x"), construct(result, "y"), construct(result, "z"),
+                                  construct(result, "phi"), construct(result, "theta"), construct(result, "d"))
+        result_string = str(x) + "," + str(y) + "," + str(z) + "," + str(phi) + "," + str(theta) + "," + str(d) + "\n"
+        print(result_string[:-1])
 
         contents.append(result_string)
         print("more photons is %d" % (more_photons))
         if(not more_photons):
-            with open("result_coordinates.csv", "w") as f:
+            with open("result_coordinatesV3.csv", "w") as f:
                 f.writelines(contents)
-            print("finished, check result_coordinates.csv")
+            print("finished, check result_coordinatesV3.csv")
             exit(0)
 
 #        pkt.show2()
@@ -72,7 +63,7 @@ def main():
     print(("sniffing on %s" % iface))
     sys.stdout.flush()
    
-    contents = ["new_x,new_y,new_z,original_index\n"]
+    contents = ["x,y,z,phi,theta,d\n"]
     sniff(iface = iface,
           prn = lambda x: handle_pkt(x, contents))
 
